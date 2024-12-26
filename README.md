@@ -3,7 +3,7 @@
 Ekart is a modern and responsive ecommerce web application built using **Angular**, **Firebase**, and **Tailwind CSS**. It provides a seamless and intuitive shopping experience.
 
 ## Live Demo
-Check out the live version of Ekart here: [**ekart-364.web.app**](https://ekart-364.web.app/)
+Check out the live version of Ekart here: [**ekart-369.web.app**](https://ekart-369.web.app/)
 
 ## Features
 - User authentication with Firebase
