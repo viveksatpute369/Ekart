@@ -1,0 +1,103 @@
+<!-- Cart Page -->
+<div class="bg-white">
+  <main>
+    <div class="max-w-2xl mx-auto py-0 px-4 sm:py-8 sm:px-6 lg:px-0">
+      <h1 class="text-3xl font-extrabold text-center tracking-tight text-gray-900 sm:text-4xl">Shopping Cart</h1>
+
+      <form class="mt-12" *ngIf="cartSize !== 0">
+        <section aria-labelledby="cart-heading">
+          <h2 id="cart-heading" class="sr-only">Items in your shopping cart</h2>
+
+          <ul role="list" class="border-t border-b border-gray-200 divide-y divide-gray-200">
+            <li class="flex py-6" *ngFor="let item of cart">
+              <div class="flex-shrink-0" [routerLink]="['/list', item.item.category, item.item.name]">
+                <img [src]="item.item.image" [alt]="item.item.title"
+                  class="w-24 h-24 rounded-md object-center object-cover sm:w-32 sm:h-32">
+              </div>
+              <div class="ml-4 flex-1 flex flex-col sm:ml-6">
+                <div>
+                  <div class="flex justify-between">
+                    <h4 class="text-sm" [routerLink]="['/list', item.item.category, item.item.name]">
+                      <a class="font-medium text-gray-700 hover:text-gray-800"> {{ item.item.title }} </a>
+                    </h4>
+                    <p class="ml-4 text-sm font-medium text-gray-900">${{ item.item.price }}</p>
+                  </div>
+                  <p class="mt-1 text-sm text-gray-500">Quantity: {{ item.quantity }}</p>
+                  <p class="mt-1 text-sm text-gray-500">Size: {{ item.size }}</p>
+                </div>
+                <div class="mt-4 flex-1 flex items-end justify-between">
+                  <p class="flex items-center text-sm text-gray-700 space-x-2">
+                    <!-- Heroicon name: solid/check -->
+                    <svg class="flex-shrink-0 h-5 w-5 text-green-500" xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                      <path fill-rule="evenodd"
+                        d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                        clip-rule="evenodd" />
+                    </svg>
+                    <span>In stock</span>
+                  </p>
+                  <div class="ml-4">
+                    <button type="button" class="text-sm font-medium text-indigo-600 hover:text-indigo-500"
+                      (click)="onRemove(item)">
+                      <span>Remove</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+          </ul>
+        </section>
+
+        <!-- Order summary -->
+        <section aria-labelledby="summary-heading" class="mt-10">
+          <h2 id="summary-heading" class="sr-only">Order summary</h2>
+
+          <div>
+            <dl class="space-y-4">
+              <div class="flex items-center justify-between">
+                <dt class="text-base font-medium text-gray-900">Subtotal</dt>
+                <dd class="ml-4 text-base font-medium text-gray-900">${{ cartTotal.toFixed(2) }}</dd>
+              </div>
+            </dl>
+            <p class="mt-1 text-sm text-gray-500">Shipping and taxes will be calculated at checkout.</p>
+          </div>
+
+          <div class="mt-10">
+            <button type="submit"
+              class="w-full bg-indigo-600 border border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-indigo-500"
+              (click)="onCheckout()">Checkout</button>
+          </div>
+
+          <div class="mt-6 text-sm text-center text-gray-500">
+            <p>
+              or <a routerLink="/" class="text-indigo-600 font-medium hover:text-indigo-500">Continue Shopping<span
+                  aria-hidden="true"> &rarr;</span></a>
+            </p>
+          </div>
+        </section>
+      </form>
+    </div>
+
+  </main>
+</div>
+<!-------------------------->
+<div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+  *ngIf="cartSize === 0">
+  <div class="lg:text-center">
+    <!------If Empty-------->
+    <div>
+      <div class="flex flex-wrap justify-center">
+        <img
+          src="https://img.freepik.com/free-vector/man-shopping-supermarket_74855-7612.jpg?w=740&t=st=1664858072~exp=1664858672~hmac=e4d7164fc1298847a042847ce396f3844a597a920a749aa214ad39c7e83ac8f9"
+          class="p-1 bg-white rounded max-w-sm" alt="..." />
+      </div>
+      <button type="button" routerLink="/"
+        class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Shop
+        Now</button>
+    </div>
+    <!----------------------->
+  </div>
+</div>
+
+<!--------------------------------------------------------------------->

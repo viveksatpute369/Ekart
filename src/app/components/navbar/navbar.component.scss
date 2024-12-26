@@ -1,0 +1,23 @@
+.search {
+    width: 800px;
+    padding: 5px;
+    text-align: center;
+}
+
+@media screen and (max-width: 769px) {
+    .search {
+        margin-left: 10px;
+        width: calc(100% - 25px);
+        padding: 5px;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 390px) {
+    .search {
+        margin-left: 10px;
+        width: calc(100% - 25px);
+        padding: 5px;
+        text-align: center;
+    }
+}

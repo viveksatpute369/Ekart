@@ -1,0 +1,193 @@
+<main class="lg:min-h-full lg:overflow-hidden lg:flex lg:flex-row-reverse">
+  <h1 class="sr-only">Checkout</h1>
+  <!-- Mobile order summary -->
+  <section aria-labelledby="order-heading" class="bg-gray-50 px-4 py-6 sm:px-6 lg:hidden">
+    <div class="max-w-lg mx-auto">
+      <div id="disclosure-1">
+        <ul role="list" class="divide-y divide-gray-200 border-b border-gray-200">
+          <li class="flex py-6 space-x-6" *ngFor="let item of cart">
+            <img [src]="item.item.image" [alt]="item.item.title"
+              class="flex-none w-40 h-40 object-center object-cover bg-gray-200 rounded-md"
+              [routerLink]="['/list', item.item.category, item.item.name]">
+            <div class="flex flex-col justify-between space-y-4">
+              <div class="text-sm font-medium space-y-1">
+                <h3 class="text-gray-900">{{item.item.title}}</h3>
+                <p class="text-gray-900">${{item.item.price}}</p>
+                <p class="text-gray-500">{{item.quantity}}</p>
+                <p class="text-gray-500">{{item.size}}</p>
+              </div>
+            </div>
+          </li>
+          <!-- More products... -->
+        </ul>
+        <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
+          <div class="flex justify-between">
+            <dt>Subtotal</dt>
+            <dd class="text-gray-900">${{ cartTotal.toFixed(2) }}</dd>
+          </div>
+          <div class="flex justify-between">
+            <dt>Shipping</dt>
+            <dd class="text-gray-900">$00.00</dd>
+          </div>
+        </dl>
+      </div>
+      <p class="flex items-center justify-between text-sm font-medium text-gray-900 border-t border-gray-200 pt-6 mt-6">
+        <span class="text-base">Total</span>
+        <span class="text-base">${{ cartTotal.toFixed(2) }}</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- Order summary -->
+  <section aria-labelledby="summary-heading" class="hidden bg-gray-50 w-full max-w-md flex-col lg:flex">
+    <h2 id="summary-heading" class="sr-only">Order summary</h2>
+    <ul role="list" class="flex-auto overflow-y-auto divide-y divide-gray-200 px-6">
+      <li class="flex py-6 space-x-6" *ngFor="let item of cart">
+        <img [src]="item.item.image" [alt]="item.item.title"
+          [routerLink]="['/list', item.item.category, item.item.name]"
+          class="flex-none w-40 h-40 object-center object-cover bg-gray-200 rounded-md">
+        <div class="flex flex-col justify-between space-y-4">
+          <div class="text-sm font-medium space-y-1">
+            <h3 class="text-gray-900">{{item.item.title}}</h3>
+            <p class="text-gray-900">${{item.item.price}}</p>
+            <p class="text-gray-500">{{item.quantity}}</p>
+            <p class="text-gray-500">{{item.size}}</p>
+          </div>
+        </div>
+      </li>
+      <!-- More products... -->
+    </ul>
+    <div class="sticky bottom-0 flex-none bg-gray-50 border-t border-gray-200 p-6">
+      <dl class="text-sm font-medium text-gray-500 mt-10 space-y-6">
+        <div class="flex justify-between">
+          <dt>Subtotal</dt>
+          <dd class="text-gray-900">${{ cartTotal.toFixed(2) }}</dd>
+        </div>
+        <div class="flex justify-between">
+          <dt>Shipping</dt>
+          <dd class="text-gray-900">$00.00</dd>
+        </div>
+        <div class="flex items-center justify-between border-t border-gray-200 text-gray-900 pt-6">
+          <dt class="text-base">Total</dt>
+          <dd class="text-base">${{ cartTotal.toFixed(2) }}</dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- Checkout Google Pay -->
+  <section aria-labelledby="payment-heading"
+    class="flex-auto overflow-y-auto px-4 pt-12 pb-16 sm:px-6 sm:pt-16 lg:px-8 lg:pt-0 lg:pb-24">
+    <div class="max-w-lg mx-auto">
+      <div class="hidden pt-10 pb-16 lg:flex">
+        <a>
+          <span class="sr-only">Workflow</span>
+          <img src="../../../assets/logo.png" alt="" class="h-8 w-auto"> <!-- logo -->
+        </a>
+      </div>
+
+      <google-pay-button environment="TEST" buttonType="buy" buttonSizeMode="fill" [paymentRequest]="paymentRequest"
+        (loadpaymentdata)="onLoadPaymentData($event)"
+        class="w-full flex items-center justify-center bg-black border border-transparent text-white rounded-md  hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900">
+      </google-pay-button>
+
+      <div class="relative mt-8">
+        <div class="absolute inset-0 flex items-center" aria-hidden="true">
+          <div class="w-full border-t border-gray-200"></div>
+        </div>
+        <div class="relative flex justify-center">
+          <span class="px-4 bg-white text-sm font-medium text-gray-500"> or </span>
+        </div>
+      </div>
+      <!-- Checkout form -->
+      <form #f="ngForm" class="checkout-grid" (ngSubmit)="onSubmit($event, f)" novalidate>
+        <div class="grid grid-cols-12 gap-y-6 gap-x-4">
+          <div class="col-span-full">
+            <label for="email-address" class="block text-sm font-medium text-gray-700">Email address</label>
+            <div class="mt-1">
+              <input type="email" id="email-address" name="email-address" autocomplete="email"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-full">
+            <label for="name-on-card" class="block text-sm font-medium text-gray-700">Name on card</label>
+            <div class="mt-1">
+              <input type="text" id="name-on-card" name="name-on-card" autocomplete="cc-name" [(ngModel)]="cardName"
+                required
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-full">
+            <label for="card-number" class="block text-sm font-medium text-gray-700">Card number</label>
+            <div class="mt-1">
+              <input type="text" id="card-number" name="card-number" autocomplete="cc-number" [(ngModel)]="cardNumber"
+                required
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-8 sm:col-span-9">
+            <label for="expiration-date" class="block text-sm font-medium text-gray-700">Expiration date (MM/YY)</label>
+            <div class="mt-1">
+              <input type="text" name="expiration-date" id="expiration-date" autocomplete="cc-exp" [(ngModel)]="expDate"
+                required
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-4 sm:col-span-3">
+            <label for="cvc" class="block text-sm font-medium text-gray-700">CVC</label>
+            <div class="mt-1">
+              <input type="text" name="cvc" id="cvc" autocomplete="csc" [(ngModel)]="cvv" required
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-full">
+            <label for="address" class="block text-sm font-medium text-gray-700">Address</label>
+            <div class="mt-1">
+              <input type="text" id="address" name="address" autocomplete="street-address"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-full sm:col-span-4">
+            <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+            <div class="mt-1">
+              <input type="text" id="city" name="city" autocomplete="address-level2"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-full sm:col-span-4">
+            <label for="region" class="block text-sm font-medium text-gray-700">State / Province</label>
+            <div class="mt-1">
+              <input type="text" id="region" name="region" autocomplete="address-level1"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+          <div class="col-span-full sm:col-span-4">
+            <label for="postal-code" class="block text-sm font-medium text-gray-700">Postal code</label>
+            <div class="mt-1">
+              <input type="text" id="postal-code" name="postal-code" autocomplete="postal-code"
+                class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            </div>
+          </div>
+        </div>
+        <div class="mt-6 flex space-x-2">
+        </div>
+        <button type="submit"
+          class="w-full mt-6 bg-indigo-600 border border-transparent rounded-md shadow-sm py-2 px-4 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Pay
+          ${{ cartTotal.toFixed(2) }}</button>
+        <p class="flex justify-center text-sm font-medium text-gray-500 mt-6">
+          <!-- Heroicon name: solid/lock-closed -->
+          <svg class="w-5 h-5 text-gray-400 mr-1.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z"
+              clip-rule="evenodd" />
+          </svg>
+          Payment details stored in plain text
+        </p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<!--------------------------->
+<!--------------------------------------------------------------------->

@@ -1,0 +1,22 @@
+<!-------------- Search ------------------>
+<input type="text" id="simple-search"
+    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+    placeholder="Search" [(ngModel)]="searchText" matInput [matAutocomplete]="auto">
+
+<mat-autocomplete #auto="matAutocomplete">
+    <mat-option *ngFor="let category of categories | filter:searchText" [value]="category.name"
+        [routerLink]="['/list', category.name]">
+        {{category.name}}
+    </mat-option>
+</mat-autocomplete>
+
+<!------------------------------------------
+    
+    <mat-optgroup *ngFor="let category of categories | filter:searchText" [label]="category.name"
+        [routerLink]="['/list', category.name]">
+        <mat-option *ngFor="let category of categories | filter:searchText" [value]="category.name"
+            [routerLink]="['/list', category.name]">
+            {{category.name}}
+        </mat-option>
+    </mat-optgroup>
+-->

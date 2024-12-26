@@ -1,0 +1,73 @@
+<div class="p-4 w-full text-center bg-white rounded-lg border shadow-md sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+    <div class="grid w-full grid-cols-1 items-start gap-y-8 gap-x-6 sm:grid-cols-12 lg:gap-x-8" *ngIf="item">
+        <!-- Product Image -->
+        <div class="aspect-w-2 aspect-h-3 overflow-hidden rounded-lg bg-white-100 sm:col-span-4 lg:col-span-5">
+            <img [src]="item.largeImage" [alt]="item.title" class="object-cover object-center">
+        </div>
+        <div class="sm:col-span-8 lg:col-span-7">
+            <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">{{ item.title }}</h2> <!-- // title -->
+
+            <section aria-labelledby="information-heading" class="mt-2">
+                <h3 id="information-heading" class="sr-only">Product information</h3>
+
+                <p class="text-2xl text-gray-900">${{ item.price.toFixed(2) }}</p> <!-- // price -->
+
+                <!-- Description -->
+                <div class="mt-6">
+                    <h4 class="sr-only">Description</h4>
+                    <div class="flex items-center">
+                        <div></div> <!-- // description -->
+                    </div>
+                </div>
+            </section>
+
+            <section aria-labelledby="options-heading" class="mt-10">
+                <h3 id="options-heading" class="sr-only">Product options</h3>
+
+                <form>
+
+                    <!-- Quantity -->
+                    <div class="mt-10">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-sm font-medium text-gray-900">Quantity</h4>
+                        </div>
+                        <fieldset class="mt-4">
+                            <legend class="sr-only">Choose Quantity</legend>
+                            <div class="grid grid-cols-4 gap-4">
+                                <mat-select [(value)]="quantity" name="quantity">
+                                    <mat-option *ngFor="let quantityOption of quantityOptions" [value]="quantityOption">
+                                        {{ quantityOption }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <!-- Sizes -->
+                    <div class="mt-10">
+                        <div class="flex items-center justify-between">
+                            <h4 class="text-sm font-medium text-gray-900">Size</h4>
+                            <a href="#" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">Size
+                                guide</a>
+                        </div>
+                        <fieldset class="mt-4">
+                            <legend class="sr-only">Choose a size</legend>
+                            <div class="grid grid-cols-4 gap-4">
+                                <!-- ml xl -->
+                                <mat-select [(value)]="size" name="size">
+                                    <mat-option *ngFor="let sizeOption of sizeOptions" [value]="sizeOption">
+                                        {{ sizeOption }}
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <button type="submit" (click)="onAddToCart()"
+                        class="mt-8 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Add
+                        to Cart</button>
+
+                </form>
+            </section>
+        </div>
+    </div>
+</div>
