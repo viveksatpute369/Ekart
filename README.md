@@ -42,10 +42,7 @@ This project is deployed on Firebase Hosting. To deploy your own version:
     Set up Firebase and install Firebase CLI.
     Run firebase init to configure Firebase in your project.
     Use firebase deploy to deploy the app to Firebase Hosting.
-
-Contributing
-
-Feel free to fork the repository and submit pull requests. Please ensure that your contributions align with the project's goals and coding standards.
+    
 License
 
 This project is licensed under the MIT License - see the LICENSE file for details.
